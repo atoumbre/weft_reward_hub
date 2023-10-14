@@ -40,12 +40,12 @@
 			ownPoolUnits = res!['$fungible_resources']['resource_rdx1th5slwxk8x8xs7438ek6kp7kvrz5lxuu823tql4dqvd92q2fzxr3aq'];
 		});
 
-		get_weft_price().then((res) => {
-			const weft_token = res['resource_rdx1tk3fxrz75ghllrqhyq8e574rkf4lsq2x5a0vegxwlh3defv225cth3'];
-			console.log(weft_token);
-			weft_price_xrd = weft_token['tokenPriceXRD'];
-			// weft_price_usd = weft_token['tokenPriceUSD'];
-		});
+		// get_weft_price().then((res) => {
+		// 	const weft_token = res['resource_rdx1tk3fxrz75ghllrqhyq8e574rkf4lsq2x5a0vegxwlh3defv225cth3'];
+		// 	console.log(weft_token);
+		// 	weft_price_xrd = weft_token['tokenPriceXRD'];
+		// 	// weft_price_usd = weft_token['tokenPriceUSD'];
+		// });
 	});
 </script>
 
