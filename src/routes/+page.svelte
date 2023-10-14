@@ -63,7 +63,7 @@
 		<div class="section-title">Staking</div>
 		<div class="section-content">
 			<p>Total staked XRD: {format_number(totalStakedXRD)}</p>
-			<p><b>Staker APR: {format_number(staker_apr)} %</b></p>
+			<p><b>Staking APR: {format_number(staker_apr)} %</b></p>
 			<a href="https://dashboard.radixdlt.com/network-staking/validator_rdx1sd6n65sx0thvfzfp6x0jp4qgwxtudpx575wpwqespdlva2wldul9xk">Stake here</a>
 		</div>
 	</div>
@@ -73,7 +73,7 @@
 		<div class="section-content">
 			<p>Pooled WEFT: {format_number(pooledWEFT)}</p>
 			<p>Pooled XRD: {format_number(pooledXRD)}</p>
-			<p><b>LP APR: {format_number(lp_apr)} %</b></p>
+			<p><b>LM APR: {format_number(lp_apr)} %</b></p>
 			<a href="https://ociswap.com/pool/component_rdx1crvtvnr02f5fl49jvap4rndlepfsgta455wcyteacr7dtfgzvqqw6n/liquidity">Add liquidity here</a>
 		</div>
 	</div>
