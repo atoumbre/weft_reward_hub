@@ -48,25 +48,88 @@
 	});
 </script>
 
-<h1>Weft Finance reward Hub</h1>
+<div class="container">
+	<h1>Weft Finance reward Hub</h1>
+	<div class="section">
+		<div class="section-title">WEFT Price</div>
+		<div class="section-content">
+			<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
+			<p>1 WEFT = {format_number(weft_price_usd)} USD</p>
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-title">Staking</div>
+		<div class="section-content">
+			<p>Total staked XRD: {format_number(totalStakedXRD)}</p>
+			<p><b>Staker APR: {format_number(staker_apr)} %</b></p>
+			<a href="https://dashboard.radixdlt.com/network-staking/validator_rdx1sd6n65sx0thvfzfp6x0jp4qgwxtudpx575wpwqespdlva2wldul9xk">Stake here</a>
+		</div>
+	</div>
 
-<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
-<p>1 WEFT = {format_number(weft_price_usd)} USD</p>
+	<div class="section">
+		<div class="section-title">Liquidity Mining (OCISWAP)</div>
+		<div class="section-content">
+			<p>Pooled WEFT: {format_number(pooledWEFT)}</p>
+			<p>Pooled XRD: {format_number(pooledXRD)}</p>
+			<p><b>LP APR: {format_number(lp_apr)} %</b></p>
+			<a href="https://ociswap.com/pool/component_rdx1crvtvnr02f5fl49jvap4rndlepfsgta455wcyteacr7dtfgzvqqw6n/liquidity">Add liquidity here</a>
+		</div>
+	</div>
+</div>
 
-STAKING
+<style>
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 2rem;
+	}
 
-<p>Total staked XRD: {format_number(totalStakedXRD)}</p>
-<p><b>Staker APR: {format_number(staker_apr)} %</b></p>
-<p>
-	<a href="https://dashboard.radixdlt.com/network-staking/validator_rdx1sd6n65sx0thvfzfp6x0jp4qgwxtudpx575wpwqespdlva2wldul9xk">Stake here</a>
-</p>
-LIQUIDITY MINING (OCISWAP)
+	h1 {
+		font-size: 2rem;
+		margin-bottom: 1rem;
+	}
 
-<p>Pooled WEFT: {format_number(pooledWEFT)}</p>
-<p>Pooled XRD: {format_number(pooledXRD)}</p>
+	.section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 2rem;
+		padding: 1rem;
+		background-color: #f5f5f5;
+		border-radius: 10px;
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	}
 
-<p><b>LP APR: {format_number(lp_apr)} %</b></p>
+	.section-title {
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
 
-<p>
-	<a href="https://ociswap.com/pool/component_rdx1crvtvnr02f5fl49jvap4rndlepfsgta455wcyteacr7dtfgzvqqw6n/liquidity">Add liquidity here</a>
-</p>
+	.section-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 1rem;
+	}
+
+	.section-content p {
+		font-size: 1.2rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.section-content a {
+		font-size: 1.2rem;
+		margin-top: 1rem;
+		padding: 0.5rem 1rem;
+		background-color: #4caf50;
+		color: white;
+		border-radius: 5px;
+		text-decoration: none;
+		transition: background-color 0.2s ease-in-out;
+	}
+
+	.section-content a:hover {
+		background-color: #388e3c;
+	}
+</style>
