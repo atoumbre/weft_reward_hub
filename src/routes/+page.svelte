@@ -49,12 +49,12 @@
 </script>
 
 <div class="container">
-	<h1>Weft Finance reward Hub</h1>
 	<div class="section">
-		<div class="section-title">WEFT Price</div>
+		<h1>Weft Finance reward Hub</h1>
+		<!-- <div class="section-title">WEFT Price</div> -->
 		<div class="section-content">
 			<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
-			<p>1 WEFT = {format_number(weft_price_usd)} USD</p>
+			<!-- <p>1 WEFT = {format_number(weft_price_usd)} USD</p> -->
 		</div>
 	</div>
 	<div class="section">
