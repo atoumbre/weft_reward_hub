@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { get_dapp_definition_details, get_lp_details, get_pool_details, get_validator_details } from '$lib';
+	import { get_dapp_definition_details, get_lp_details, get_pool_details, get_validator_details, get_weft_price } from '$lib';
 	import { format_number } from '$lib/utils';
 	import { onMount } from 'svelte';
 
 	const stakerHourlyDistribution = 3411; // Constant
 	const lpHourlyDistribution = 1000; // Constant
 
-	const xrd_price_usd = 0.04; // Astrolencent
-	const weft_price_xrd = 0.4; // Astrolencent
+	let weft_price_xrd: number; // Astrolencent
+	let weft_price_usd: number; // Astrolencent
 
 	let totalStakedXRD: number;
 	let totalPoolUnits: number;
@@ -38,19 +38,25 @@
 		get_dapp_definition_details().then((res) => {
 			ownPoolUnits = res!['$fungible_resources']['resource_rdx1th5slwxk8x8xs7438ek6kp7kvrz5lxuu823tql4dqvd92q2fzxr3aq'];
 		});
+
+		get_weft_price().then((res) => {
+			const weft_token = res['resource_rdx1tk3fxrz75ghllrqhyq8e574rkf4lsq2x5a0vegxwlh3defv225cth3'];
+			console.log(weft_token);
+			weft_price_xrd = weft_token['tokenPriceXRD'];
+			weft_price_usd = weft_token['tokenPriceUSD'];
+		});
 	});
 </script>
 
 <h1>Weft Finance reward Hub</h1>
 
-<p>Price of XRD: {xrd_price_usd}</p>
-<p>Price of WEFT: {weft_price_xrd * xrd_price_usd}</p>
+<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
+<p>1 WEFT = {format_number(weft_price_usd)} USD</p>
 
 STAKING
 
 <p>Total staked XRD: {format_number(totalStakedXRD)}</p>
-<p>Staker APR: {format_number(staker_apr)} %</p>
-
+<p><b>Staker APR: {format_number(staker_apr)} %</b></p>
 <p>
 	<a href="https://dashboard.radixdlt.com/network-staking/validator_rdx1sd6n65sx0thvfzfp6x0jp4qgwxtudpx575wpwqespdlva2wldul9xk">Stake here</a>
 </p>
@@ -58,7 +64,8 @@ LIQUIDITY MINING (OCISWAP)
 
 <p>Pooled WEFT: {format_number(pooledWEFT)}</p>
 <p>Pooled XRD: {format_number(pooledXRD)}</p>
-<p>LP APR: {format_number(lp_apr)} %</p>
+
+<p><b>LP APR: {format_number(lp_apr)} %</b></p>
 
 <p>
 	<a href="https://ociswap.com/pool/component_rdx1crvtvnr02f5fl49jvap4rndlepfsgta455wcyteacr7dtfgzvqqw6n/liquidity">Add liquidity here</a>

@@ -30,3 +30,18 @@ export async function get_dapp_definition_details() {
     let poolDetails = await fetch_entity_state('account_rdx168r05zkmtvruvqfm4rfmgnpvhw8a47h6ln7vl3rgmyrlzmfvdlfgcg', gatewayApi.state.innerClient, { useDecimals: false });
     return poolDetails
 }
+
+export async function get_weft_price() {
+    // https://api.astrolescent.com/partner/R96v1uADor/prices
+
+    let weftPrice = await fetch('https://api.astrolescent.com/partner/R96v1uADor/prices', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+
+    let json = await weftPrice.json()
+
+    return json
+}
