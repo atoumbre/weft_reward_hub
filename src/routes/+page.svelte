@@ -7,7 +7,7 @@
 	const lpHourlyDistribution = 1000; // Constant
 
 	let weft_price_xrd: number; // Astrolencent
-	let weft_price_usd: number; // Astrolencent
+	// let weft_price_usd: number; // Astrolencent
 
 	let totalStakedXRD: number;
 	let totalPoolUnits: number;
@@ -43,7 +43,7 @@
 			const weft_token = res['resource_rdx1tk3fxrz75ghllrqhyq8e574rkf4lsq2x5a0vegxwlh3defv225cth3'];
 			console.log(weft_token);
 			weft_price_xrd = weft_token['tokenPriceXRD'];
-			weft_price_usd = weft_token['tokenPriceUSD'];
+			// weft_price_usd = weft_token['tokenPriceUSD'];
 		});
 	});
 </script>
@@ -85,11 +85,6 @@
 		flex-direction: column;
 		align-items: center;
 		margin-top: 2rem;
-	}
-
-	h1 {
-		font-size: 2rem;
-		margin-bottom: 1rem;
 	}
 
 	.section {
