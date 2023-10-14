@@ -50,12 +50,14 @@
 
 <div class="container">
 	<div class="section">
-		<h1>Weft Finance reward Hub</h1>
+		<div>Weft Finance reward Hub</div>
 		<!-- <div class="section-title">WEFT Price</div> -->
 		<div class="section-content">
 			<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
 			<!-- <p>1 WEFT = {format_number(weft_price_usd)} USD</p> -->
 		</div>
+
+		<a href="https://astrolescent.com">price by Astrolescent</a>
 	</div>
 	<div class="section">
 		<div class="section-title">Staking</div>
