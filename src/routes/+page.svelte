@@ -6,7 +6,7 @@
 	const stakerHourlyDistribution = 3411; // Constant
 	const lpHourlyDistribution = 1000; // Constant
 
-	let weft_price_xrd: number; // Astrolencent
+	// let weft_price_xrd: number; // Astrolencent
 	// let weft_price_usd: number; // Astrolencent
 
 	let totalStakedXRD: number;
@@ -20,6 +20,7 @@
 	$: lp_asset_ratio = (pooledWEFT * weft_price_xrd + pooledXRD) / totalPoolUnits;
 	$: lp_apr = (lpHourlyDistribution * weft_price_xrd * 24 * 365 * 100) / ((totalPoolUnits - ownPoolUnits) * lp_asset_ratio);
 	$: staker_apr = (stakerHourlyDistribution * weft_price_xrd * 24 * 365 * 100) / totalStakedXRD;
+	$: weft_price_xrd = pooledXRD / pooledWEFT;
 
 	onMount(() => {
 		get_lp_details().then((res) => {
@@ -50,16 +51,6 @@
 
 <div class="container">
 	<div class="section">
-		<div>Weft Finance reward Hub</div>
-		<!-- <div class="section-title">WEFT Price</div> -->
-		<div class="section-content">
-			<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
-			<!-- <p>1 WEFT = {format_number(weft_price_usd)} USD</p> -->
-		</div>
-
-		<a href="https://astrolescent.com">price by Astrolescent</a>
-	</div>
-	<div class="section">
 		<div class="section-title">Staking</div>
 		<div class="section-content">
 			<p>Total staked XRD: {format_number(totalStakedXRD)}</p>
@@ -71,11 +62,18 @@
 	<div class="section">
 		<div class="section-title">Liquidity Mining (OCISWAP)</div>
 		<div class="section-content">
+			<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
 			<p>Pooled WEFT: {format_number(pooledWEFT)}</p>
 			<p>Pooled XRD: {format_number(pooledXRD)}</p>
 			<p><b>LM APR: {format_number(lp_apr)} %</b></p>
 			<a href="https://ociswap.com/pool/component_rdx1crvtvnr02f5fl49jvap4rndlepfsgta455wcyteacr7dtfgzvqqw6n/liquidity">Add liquidity here</a>
 		</div>
+	</div>
+	<div class="section">
+		<div>Weft Finance reward Hub</div>
+		<!-- <div class="section-title">WEFT Price</div> -->
+
+		<a href="https://astrolescent.com">price by Astrolescent</a>
 	</div>
 </div>
 
