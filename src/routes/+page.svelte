@@ -65,15 +65,10 @@
 			<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
 			<p>Pooled WEFT: {format_number(pooledWEFT)}</p>
 			<p>Pooled XRD: {format_number(pooledXRD)}</p>
+			<p>TVL in XRD: {format_number((totalPoolUnits - ownPoolUnits) * lp_asset_ratio)}</p>
 			<p><b>LM APR: {format_number(lp_apr)} %</b></p>
 			<a href="https://ociswap.com/pool/component_rdx1crvtvnr02f5fl49jvap4rndlepfsgta455wcyteacr7dtfgzvqqw6n/liquidity">Add liquidity here</a>
 		</div>
-	</div>
-	<div class="section">
-		<div>Weft Finance reward Hub</div>
-		<!-- <div class="section-title">WEFT Price</div> -->
-
-		<a href="https://astrolescent.com">price by Astrolescent</a>
 	</div>
 </div>
 
