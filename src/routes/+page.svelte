@@ -40,12 +40,12 @@
 			ownPoolUnits = res!['$fungible_resources']['resource_rdx1th5slwxk8x8xs7438ek6kp7kvrz5lxuu823tql4dqvd92q2fzxr3aq'];
 		});
 
-		get_weft_price().then((res) => {
-			const weft_token = res['resource_rdx1tk3fxrz75ghllrqhyq8e574rkf4lsq2x5a0vegxwlh3defv225cth3'];
-			console.log(weft_token);
-			weft_price_xrd = weft_token['tokenPriceXRD'];
-			// weft_price_usd = weft_token['tokenPriceUSD'];
-		});
+		// get_weft_price().then((res) => {
+		// 	const weft_token = res['resource_rdx1tk3fxrz75ghllrqhyq8e574rkf4lsq2x5a0vegxwlh3defv225cth3'];
+		// 	console.log(weft_token);
+		// 	weft_price_xrd = weft_token['tokenPriceXRD'];
+		// 	// weft_price_usd = weft_token['tokenPriceUSD'];
+		// });
 	});
 </script>
 
@@ -65,15 +65,10 @@
 			<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
 			<p>Pooled WEFT: {format_number(pooledWEFT)}</p>
 			<p>Pooled XRD: {format_number(pooledXRD)}</p>
+			<p>TVL in XRD: {format_number((totalPoolUnits - ownPoolUnits) * lp_asset_ratio)}</p>
 			<p><b>LM APR: {format_number(lp_apr)} %</b></p>
 			<a href="https://ociswap.com/pool/component_rdx1crvtvnr02f5fl49jvap4rndlepfsgta455wcyteacr7dtfgzvqqw6n/liquidity">Add liquidity here</a>
 		</div>
-	</div>
-	<div class="section">
-		<div>Weft Finance reward Hub</div>
-		<!-- <div class="section-title">WEFT Price</div> -->
-
-		<a href="https://astrolescent.com">price by Astrolescent</a>
 	</div>
 </div>
 
