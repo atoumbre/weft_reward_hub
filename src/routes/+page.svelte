@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 
 	const stakerHourlyDistribution = 3411; // Constant
-	const lpHourlyDistribution = 2000; // Constant
+	const lpHourlyDistribution = 2400; // Constant
 
 	// let weft_price_xrd: number; // Astrolencent
 	// let weft_price_usd: number; // Astrolencent
