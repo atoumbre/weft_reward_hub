@@ -1,12 +1,11 @@
 import type { StateApi } from "@radixdlt/babylon-gateway-api-sdk";
 import Decimal from "decimal.js";
 
-Decimal.set({ precision: 18 })
-const PreciseDecimal = Decimal.clone({ precision: 35 })
+Decimal.set({ precision: 18, rounding: Decimal.ROUND_DOWN })
+const PreciseDecimal = Decimal.clone({ precision: 35, rounding: Decimal.ROUND_DOWN })
 
-const dec = (input: any) => new Decimal(input)
-const pdec = (input: any) => new PreciseDecimal(input)
-
+export const dec = (input: any) => new Decimal(input)
+export const pdec = (input: any) => new PreciseDecimal(input)
 
 export declare type FetchOptions = {
     useDecimals: boolean
@@ -32,14 +31,15 @@ async function fetch_entity_state_data(entityAddress: string, stateApi: StateApi
 
 }
 
-
 export async function fetch_entity_state(entityAddress: string, stateApi: StateApi, options = defaultOptions) {
 
     let entity = await fetch_entity_state_data(entityAddress, stateApi);
 
     if (entity === undefined) return undefined;
 
+
     let resources: Record<string, number | Decimal> = {};
+    let nfts: Record<string, number | Decimal> = {};
     let vaults: Record<string, number | Decimal> = {};
 
     entity.fungible_resources?.items.forEach((item) => {
@@ -51,7 +51,7 @@ export async function fetch_entity_state(entityAddress: string, stateApi: StateA
         _vaults.forEach((vault: any) => {
 
             if (options.useDecimals) {
-                (resources[item.resource_address] as Decimal).plus(dec(vault['amount']))
+                resources[item.resource_address] = (resources[item.resource_address] as Decimal).plus(dec(vault['amount']))
                 vaults[vault['vault_address']] = dec(vault['amount'])
             } else {
                 (resources[item.resource_address] as number) += parseFloat(vault['amount'])
@@ -62,28 +62,40 @@ export async function fetch_entity_state(entityAddress: string, stateApi: StateA
 
     })
 
-    let values: Record<string, any> = {};
+    entity.non_fungible_resources?.items.forEach((item) => {
 
-    // Load details
+        if (nfts[item.resource_address] === undefined) nfts[item.resource_address] = 0;
 
-    values['$details'] = entity.details;
+        const _vaults = (item as any)['vaults']['items'] as any[];
 
+        _vaults.forEach((vault: any) => {
+            (nfts[item.resource_address] as number) += parseInt(vault['total_count'])
+        })
 
-    // Load state
+    })
+
 
     let raw_state = (entity.details as any)?.state;
 
+    let values: Record<string, any> = {};
 
-    if (raw_state !== undefined) {
+    if (raw_state !== undefined && raw_state.fields !== undefined) {
+
 
         let fields = raw_state.fields as any[];
 
         values = await fetch_element_fields(fields, stateApi, options)
-
     }
+
+    let nft_keys = Object.keys(nfts);
+    nft_keys.forEach((key) => {
+        if (nfts[key] === 0) delete nfts[key];
+    })
 
     values['$fungible_resources'] = resources;
     values['$fungible_vaults'] = vaults;
+    values['$non_fungible_resources'] = nfts;
+    values['$details'] = entity.details
 
     return values;
 }
@@ -110,19 +122,47 @@ async function fetch_internal_state(entityAddress: string, stateApi: StateApi, o
     return values;
 }
 
-export async function fetch_element_fields(fields: any[], stateApi: StateApi, options = defaultOptions): Promise<Record<string, any>> {
+export async function fetch_element_fields(fields: any[], stateApi: StateApi, options = defaultOptions): Promise<Record<string, any> | any[]> {
 
-    let values: Record<string, any> = {};
+    if (fields.length == 0) return {}
 
-    if (fields === undefined) return values;
 
-    let tasks = fields.map(async (field) => {
-        values[field.field_name as string] = await fetch_field(field, stateApi, options);
-    });
+    if (fields.length === 1) {
 
-    await Promise.all(tasks);
+        if (fields[0]?.field_name === undefined) {
+            return await fetch_field(fields[0], stateApi, options)
+        } else {
+            return { [fields[0]?.field_name]: await fetch_field(fields[0], stateApi, options) }
+        }
 
-    return values;
+        // return await fetch_field(fields[0], stateApi, options)
+    }
+
+    const isArray = fields[0]?.field_name === undefined;
+
+    if (!isArray) {
+        let values: Record<string, any> = {};
+        let tasks = fields.map(async (field) => {
+            values[field.field_name as string] = await fetch_field(field, stateApi, options);
+        });
+
+        await Promise.all(tasks);
+
+        return values;
+    } else {
+
+        let values: any[] = [];
+
+        let tasks = fields.map(async (field) => {
+            let value = await fetch_field(field, stateApi, options);
+            values.push(value);
+        });
+
+        await Promise.all(tasks);
+
+        return values;
+    }
+
 }
 
 export async function fetch_field(field: any, stateApi: StateApi, options: FetchOptions = defaultOptions) {
@@ -184,8 +224,10 @@ export async function fetch_field(field: any, stateApi: StateApi, options: Fetch
             break;
 
         case 'Enum':
+
             if (field.type_name == 'Option') {
-                if (field.variant_id === '0' || field.variant_name === 'None') {
+
+                if (field.variant_id === 0 || field.variant_name === 'None') {
                     value = undefined;
                     break;
                 }
@@ -198,6 +240,23 @@ export async function fetch_field(field: any, stateApi: StateApi, options: Fetch
                 value = (field.variant_id === '0' || field.variant_name === 'None') ? undefined : await fetch_element_fields(field.fields, stateApi, options);
                 break;
             }
+
+
+
+
+            if (field.type_name == 'CDPType') {
+
+                if (field.variant_id === 1 || field.variant_id === 2) {
+                    value = await fetch_element_fields(field.fields, stateApi, options);
+                    break;
+                }
+
+
+                value = undefined;
+                break;
+            }
+
+
 
             break;
 
@@ -214,8 +273,9 @@ export async function fetch_field(field: any, stateApi: StateApi, options: Fetch
 
             break;
 
-
         default:
+
+
             value = field
             break;
     }

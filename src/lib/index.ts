@@ -1,15 +1,8 @@
 // place files you want to import through the `$lib` alias in this folder.
 
-import {
-    GatewayApiClient
-} from '@radixdlt/babylon-gateway-api-sdk';
+import { fetch_entity_state } from "./fetch_state";
+import { gatewayApi } from "./radix-gateway-api";
 
-import { fetch_entity_state } from './fetch_state';
-
-const gatewayApi = GatewayApiClient.initialize({
-    basePath: 'https://mainnet.radixdlt.com',
-    applicationName: "",
-})
 
 export async function get_lp_details() {
     let lpResourceState = await fetch_entity_state('resource_rdx1th5slwxk8x8xs7438ek6kp7kvrz5lxuu823tql4dqvd92q2fzxr3aq', gatewayApi.state.innerClient, { useDecimals: false });

@@ -31,6 +31,7 @@
 	"dependencies": {
 		"@radixdlt/babylon-gateway-api-sdk": "^1.1.0",
 		"@radixdlt/radix-dapp-toolkit": "^1.2.0",
+		"@weft-finance/toolkit": "^0.25.0",
 		"decimal.js": "^10.4.3"
 	}
 }

@@ -1,0 +1,3 @@
+
+
+const INTERNAL_PRICE_FEED_COMPONENT = 'component_rdx1cz9u0svc4d2jtnkdqypxpcea8cj3da9vdqakrt748ackl82khfxv25'

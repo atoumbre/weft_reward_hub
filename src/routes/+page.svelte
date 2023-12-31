@@ -1,28 +1,27 @@
 <script lang="ts">
-	import { get_dapp_definition_details, get_lp_details, get_pool_details, get_validator_details, get_weft_price } from '$lib';
-	import { format_number } from '$lib/utils';
+	import { get_dapp_definition_details, get_lp_details, get_pool_details, get_validator_details } from '$lib';
+	import { format_number, get_pool_price_info } from '$lib/utils';
 	import { onMount } from 'svelte';
 
 	const stakerHourlyDistribution = 3411; // Constant
 	const lpHourlyDistribution = 2400; // Constant
-
-	// let weft_price_xrd: number; // Astrolencent
-	// let weft_price_usd: number; // Astrolencent
 
 	let totalStakedXRD: number;
 	let totalPoolUnits: number;
 	let pooledWEFT: number;
 	let pooledXRD: number;
 
-	let ownPoolUnits: number; // Gateway API
-	// const ownStakedXRD = 0; // Gateway API
+	let astro_prices: any;
 
-	$: lp_asset_ratio = (pooledWEFT * weft_price_xrd + pooledXRD) / totalPoolUnits;
-	$: lp_apr = (lpHourlyDistribution * weft_price_xrd * 24 * 365 * 100) / ((totalPoolUnits - ownPoolUnits) * lp_asset_ratio);
+	let weft_price_xrd: number;
+	let oci_tvl_in_xrd: number;
+	let dfp_tvl_in_xrd: number;
+
+	$: lp_apr = (lpHourlyDistribution * weft_price_xrd * 24 * 365 * 100) / (oci_tvl_in_xrd + dfp_tvl_in_xrd);
 	$: staker_apr = (stakerHourlyDistribution * weft_price_xrd * 24 * 365 * 100) / totalStakedXRD;
-	$: weft_price_xrd = pooledXRD / pooledWEFT;
+	// $: weft_price_xrd = pooledXRD / pooledWEFT;
 
-	onMount(() => {
+	onMount(async () => {
 		get_lp_details().then((res) => {
 			totalPoolUnits = parseFloat(res!['$details']['total_supply']);
 		});
@@ -36,16 +35,23 @@
 			pooledWEFT = res!['$fungible_resources']['resource_rdx1tk3fxrz75ghllrqhyq8e574rkf4lsq2x5a0vegxwlh3defv225cth3'];
 		});
 
-		get_dapp_definition_details().then((res) => {
-			ownPoolUnits = res!['$fungible_resources']['resource_rdx1th5slwxk8x8xs7438ek6kp7kvrz5lxuu823tql4dqvd92q2fzxr3aq'];
-		});
-
-		// get_weft_price().then((res) => {
-		// 	const weft_token = res['resource_rdx1tk3fxrz75ghllrqhyq8e574rkf4lsq2x5a0vegxwlh3defv225cth3'];
-		// 	console.log(weft_token);
-		// 	weft_price_xrd = weft_token['tokenPriceXRD'];
-		// 	// weft_price_usd = weft_token['tokenPriceUSD'];
+		// get_dapp_definition_details().then((res) => {
+		// 	ownPoolUnits = res!['$fungible_resources']['resource_rdx1th5slwxk8x8xs7438ek6kp7kvrz5lxuu823tql4dqvd92q2fzxr3aq'];
 		// });
+
+		const astro_prices_res = await fetch('https://api.astrolescent.com/partner/R96v1uADor/prices');
+		astro_prices = await astro_prices_res.json();
+
+		weft_price_xrd = astro_prices['resource_rdx1tk3fxrz75ghllrqhyq8e574rkf4lsq2x5a0vegxwlh3defv225cth3']['tokenPriceXRD'];
+
+		const dfp_pu_price_info = await get_pool_price_info(astro_prices, 'pool_rdx1c56ws8tmvw2ggk8hpfq4uvn9vthhv4g2cqs4htj3tc6r9w835te3fs');
+		const oci_pu_price_info = await get_pool_price_info(astro_prices, 'pool_rdx1ck5w5vnm6qwrmcp4way3wtyjztk7armjea3xc5xaktlk9r4gq6s3ee');
+
+		console.log(dfp_pu_price_info);
+		console.log(oci_pu_price_info);
+
+		oci_tvl_in_xrd = oci_pu_price_info.pool_value;
+		dfp_tvl_in_xrd = dfp_pu_price_info.pool_value;
 	});
 </script>
 
@@ -55,7 +61,7 @@
 		<div class="section-content">
 			<p>Total staked XRD: {format_number(totalStakedXRD)}</p>
 			<p><b>Staking APR: {format_number(staker_apr)} %</b></p>
-			<a href="https://dashboard.radixdlt.com/network-staking/validator_rdx1sd6n65sx0thvfzfp6x0jp4qgwxtudpx575wpwqespdlva2wldul9xk">Stake here</a>
+			<a href="https://dashboard.radixdlt.com/network-staking/validator_rdx1sd6n65sx0thvfzfp6x0jp4qgwxtudpx575wpwqespdlva2wldul9xk/stake">Stake here</a>
 		</div>
 	</div>
 
@@ -63,11 +69,31 @@
 		<div class="section-title">Liquidity Mining on Ociswap</div>
 		<div class="section-content">
 			<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
-			<p>Pooled WEFT: {format_number(pooledWEFT)}</p>
-			<p>Pooled XRD: {format_number(pooledXRD)}</p>
-			<p>TVL in XRD: {format_number((totalPoolUnits - ownPoolUnits) * lp_asset_ratio)}</p>
+			<!-- <p>Pooled WEFT: {format_number(pooledWEFT)}</p>
+			<p>Pooled XRD: {format_number(pooledXRD)}</p> -->
+			<p>TVL in XRD: {format_number(oci_tvl_in_xrd + dfp_tvl_in_xrd)}</p>
 			<p><b>LM APR: {format_number(lp_apr)} %</b></p>
+			<!-- <a href="https://ociswap.com/pool/component_rdx1crvtvnr02f5fl49jvap4rndlepfsgta455wcyteacr7dtfgzvqqw6n/liquidity">Add liquidity here</a> -->
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="section-title">Ociswap</div>
+		<div class="section-content">
+			<p>TVL in XRD: {format_number(oci_tvl_in_xrd)}</p>
+			<p><b>LM Share: {format_number((100 * oci_tvl_in_xrd) / (oci_tvl_in_xrd + dfp_tvl_in_xrd))} %</b></p>
 			<a href="https://ociswap.com/pool/component_rdx1crvtvnr02f5fl49jvap4rndlepfsgta455wcyteacr7dtfgzvqqw6n/liquidity">Add liquidity here</a>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="section-title">Defiplazza</div>
+		<div class="section-content">
+			<p>TVL in XRD: {format_number(dfp_tvl_in_xrd)}</p>
+			<p><b>LM Share: {format_number((100 * dfp_tvl_in_xrd) / (oci_tvl_in_xrd + dfp_tvl_in_xrd))} %</b></p>
+			<a href="https://radix.defiplaza.net/liquidity/add/resource_rdx1tk3fxrz75ghllrqhyq8e574rkf4lsq2x5a0vegxwlh3defv225cth3?direction=base"
+				>Add liquidity here</a
+			>
 		</div>
 	</div>
 </div>
