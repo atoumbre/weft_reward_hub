@@ -98,8 +98,6 @@
 	</div>
 </div>
 
-•⁠ ⁠1,23m Deposits •⁠ ⁠⁠455k loans •⁠ ⁠⁠80M XRD Staked •⁠ ⁠⁠13m worth of XRD in liquidity pools •⁠ ⁠⁠1700 X followers •⁠ ⁠⁠600 telegram members
-
 <style>
 	.container {
 		display: flex;
