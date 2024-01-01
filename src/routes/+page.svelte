@@ -87,7 +87,7 @@
 	</div>
 
 	<div class="section">
-		<div class="section-title">Defiplazza</div>
+		<div class="section-title">Defiplaza</div>
 		<div class="section-content">
 			<p>TVL in XRD: {format_number(dfp_tvl_in_xrd)}</p>
 			<p><b>LM Share: {format_number((100 * dfp_tvl_in_xrd) / (oci_tvl_in_xrd + dfp_tvl_in_xrd))} %</b></p>
@@ -97,6 +97,8 @@
 		</div>
 	</div>
 </div>
+
+•⁠ ⁠1,23m Deposits •⁠ ⁠⁠455k loans •⁠ ⁠⁠80M XRD Staked •⁠ ⁠⁠13m worth of XRD in liquidity pools •⁠ ⁠⁠1700 X followers •⁠ ⁠⁠600 telegram members
 
 <style>
 	.container {
