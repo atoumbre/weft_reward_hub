@@ -66,7 +66,7 @@
 	</div>
 
 	<div class="section">
-		<div class="section-title">Liquidity Mining on Ociswap</div>
+		<div class="section-title">Liquidity Mining</div>
 		<div class="section-content">
 			<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
 			<!-- <p>Pooled WEFT: {format_number(pooledWEFT)}</p>
