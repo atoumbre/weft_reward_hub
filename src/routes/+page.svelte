@@ -68,13 +68,13 @@
 	<div class="section">
 		<div class="section-title">Liquidity Mining</div>
 		<div class="section-content">
+			<p>TVL in XRD: {format_number(oci_tvl_in_xrd + dfp_tvl_in_xrd)}</p>
 			<p><b>LM APR: {format_number(lp_apr)} %</b></p>
-			<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
 			<!-- <p>Pooled WEFT: {format_number(pooledWEFT)}</p>
-			<p>Pooled XRD: {format_number(pooledXRD)}</p> -->
-			<p><b>TVL in XRD: {format_number(oci_tvl_in_xrd + dfp_tvl_in_xrd)}</b></p>
+				<p>Pooled XRD: {format_number(pooledXRD)}</p> -->
 			<p>Ociswap TVL: {format_number(oci_tvl_in_xrd)}</p>
 			<p>Defiplaza TVL: {format_number(dfp_tvl_in_xrd)}</p>
+			<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
 			<!-- <a href="https://ociswap.com/pool/component_rdx1crvtvnr02f5fl49jvap4rndlepfsgta455wcyteacr7dtfgzvqqw6n/liquidity">Add liquidity here</a> -->
 		</div>
 	</div>
