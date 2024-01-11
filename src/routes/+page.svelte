@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { get_dapp_definition_details, get_lp_details, get_pool_details, get_validator_details } from '$lib';
+	import { get_lp_details, get_pool_details, get_validator_details } from '$lib';
 	import { format_number, get_pool_price_info } from '$lib/utils';
 	import { onMount } from 'svelte';
 
@@ -68,25 +68,27 @@
 	<div class="section">
 		<div class="section-title">Liquidity Mining</div>
 		<div class="section-content">
+			<p><b>LM APR: {format_number(lp_apr)} %</b></p>
 			<p>1 WEFT = {format_number(weft_price_xrd)} XRD</p>
 			<!-- <p>Pooled WEFT: {format_number(pooledWEFT)}</p>
 			<p>Pooled XRD: {format_number(pooledXRD)}</p> -->
-			<p>TVL in XRD: {format_number(oci_tvl_in_xrd + dfp_tvl_in_xrd)}</p>
-			<p><b>LM APR: {format_number(lp_apr)} %</b></p>
+			<p><b>TVL in XRD: {format_number(oci_tvl_in_xrd + dfp_tvl_in_xrd)}</b></p>
+			<p>Ociswap TVL: {format_number(oci_tvl_in_xrd)}</p>
+			<p>Defiplaza TVL: {format_number(dfp_tvl_in_xrd)}</p>
 			<!-- <a href="https://ociswap.com/pool/component_rdx1crvtvnr02f5fl49jvap4rndlepfsgta455wcyteacr7dtfgzvqqw6n/liquidity">Add liquidity here</a> -->
 		</div>
 	</div>
 
-	<div class="section">
+	<!-- <div class="section">
 		<div class="section-title">Ociswap</div>
 		<div class="section-content">
 			<p>TVL in XRD: {format_number(oci_tvl_in_xrd)}</p>
 			<p><b>LM Share: {format_number((100 * oci_tvl_in_xrd) / (oci_tvl_in_xrd + dfp_tvl_in_xrd))} %</b></p>
 			<a href="https://ociswap.com/pool/component_rdx1crvtvnr02f5fl49jvap4rndlepfsgta455wcyteacr7dtfgzvqqw6n/liquidity">Add liquidity here</a>
 		</div>
-	</div>
+	</div> -->
 
-	<div class="section">
+	<!-- <div class="section">
 		<div class="section-title">Defiplaza</div>
 		<div class="section-content">
 			<p>TVL in XRD: {format_number(dfp_tvl_in_xrd)}</p>
@@ -95,7 +97,7 @@
 				>Add liquidity here</a
 			>
 		</div>
-	</div>
+	</div> -->
 </div>
 
 <style>
