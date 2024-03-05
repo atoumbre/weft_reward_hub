@@ -3,7 +3,7 @@
 	import { format_number, get_pool_price_info } from '$lib/utils';
 	import { onMount } from 'svelte';
 
-	const stakerHourlyDistribution = 3411; // Constant
+	const stakerHourlyDistribution = 1137; // Constant
 	const lpHourlyDistribution = 2400; // Constant
 
 	let totalStakedXRD: number;
