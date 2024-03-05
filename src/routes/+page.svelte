@@ -60,7 +60,7 @@
 		<div class="section-title">Staking</div>
 		<div class="section-content">
 			<p>Total staked XRD: {format_number(totalStakedXRD)}</p>
-			<p><b>Staking APR: {format_number(staker_apr)} %</b></p>
+			<p><b>Staking APR: {format_number(staker_apr)} % in WEFT + 5,9 % in XRD</b></p>
 			<a href="https://dashboard.radixdlt.com/network-staking/validator_rdx1sd6n65sx0thvfzfp6x0jp4qgwxtudpx575wpwqespdlva2wldul9xk/stake">Stake here</a>
 		</div>
 	</div>
