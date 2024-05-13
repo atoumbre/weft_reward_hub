@@ -40,7 +40,10 @@ export async function get_pool_price_info(astro_prices: any, pool_address: strin
 
     let pool_value = 0;
 
+    let pooled_assets: any = {}
+
     Object.keys(pool_state!.$fungible_resources).forEach((key) => {
+        pooled_assets[key] = parseFloat(pool_state!.$fungible_resources[key]);
         pool_value += parseFloat(pool_state!.$fungible_resources[key]) * astro_prices[key]['tokenPriceXRD'];
     });
 
@@ -48,5 +51,5 @@ export async function get_pool_price_info(astro_prices: any, pool_address: strin
 
     const pu_supply = parseFloat((await fetch_entity_state(pu_res_address, gatewayApi.state.innerClient))!['$details']['total_supply']);
 
-    return { price: pool_value / pu_supply, pool_value }
+    return { price: pool_value / pu_supply, pool_value, pooled_assets, }
 }
