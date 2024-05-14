@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getAprs } from '$lib/incentives_apr';
+	import { getAprs } from '$lib';
 	import { JsonView } from '@zerodevx/svelte-json-view';
 </script>
 
