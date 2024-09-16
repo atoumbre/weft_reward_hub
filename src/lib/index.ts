@@ -133,11 +133,11 @@ export async function getAprs() {
 
     let returnedData = {
         weftPriceInXrd: weftPriceXrd,
-        xrdStaking: {
-            totalStaked: totalStakedXRD,
-            hourlyDistribution: stakerHourlyDistribution,
-            stakerApr: xrdStakerApr + 5.9,
-        },
+        // xrdStaking: {
+        //     totalStaked: totalStakedXRD,
+        //     hourlyDistribution: stakerHourlyDistribution,
+        //     stakerApr: xrdStakerApr + 5.9,
+        // },
         weftStaking: {
             totalStaked: totalStakedWEFT,
             hourlyDistribution: weftStakingHourlyDistribution,
@@ -149,16 +149,16 @@ export async function getAprs() {
             hourlyDistribution: lpHourlyDistribution,
             lpApr
         },
-        lending: {
-            totalXusdcLendInXrd,
-            hourlyDistribution: lendingHourlyDistribution,
-            lendingApr,
-        },
-        borrowing: {
-            totalBorrowInXrd,
-            hourlyDistribution: borrowingHourlyDistribution,
-            borrowingApr,
-        }
+        // lending: {
+        //     totalXusdcLendInXrd,
+        //     hourlyDistribution: lendingHourlyDistribution,
+        //     lendingApr,
+        // },
+        // borrowing: {
+        //     totalBorrowInXrd,
+        //     hourlyDistribution: borrowingHourlyDistribution,
+        //     borrowingApr,
+        // }
 
     };
 
